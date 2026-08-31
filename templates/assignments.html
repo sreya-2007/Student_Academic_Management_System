@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Assignments{% endblock %}
+{% block content %}
+<h1>Assignment Tracker</h1>
+<div class="grid">
+<section class="panel">
+<h2>Add Assignment</h2>
+<form method="post">
+<input name="title" placeholder="Assignment title" required>
+<input name="subject" placeholder="Subject">
+<input type="date" name="due_date" required>
+<button>Add Assignment</button>
+</form>
+</section>
+<section class="panel">
+<h2>Assignments</h2>
+<table><tr><th>Title</th><th>Subject</th><th>Due</th><th>Status</th><th>Actions</th></tr>
+{% for a in assignments %}
+<tr><td>{{ a.title }}</td><td>{{ a.subject }}</td><td>{{ a.due_date }}</td><td>{{ a.status }}</td><td>
+<form class="inline" method="post" action="{{ url_for('toggle_assignment', id=a.id) }}"><button>Toggle</button></form>
+<form class="inline" method="post" action="{{ url_for('delete_assignment', id=a.id) }}"><button class="danger">Delete</button></form>
+</td></tr>
+{% else %}<tr><td colspan="5">No assignments yet.</td></tr>{% endfor %}
+</table>
+</section>
+</div>
+{% endblock %}

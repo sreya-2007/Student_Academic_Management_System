@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">STUDENT PRODUCTIVITY</p>
+    <h1>Academic Dashboard</h1>
+    <p>Manage subjects, attendance, assignments and marks in one place.</p>
+  </div>
+</section>
+
+<div class="cards">
+  <div class="card"><span>Subjects</span><strong>{{ subjects|length }}</strong></div>
+  <div class="card"><span>Overall Attendance</span><strong>{{ attendance_pct }}%</strong></div>
+  <div class="card"><span>Assignments</span><strong>{{ assignments|length }}</strong></div>
+  <div class="card"><span>Recent Marks</span><strong>{{ marks|length }}</strong></div>
+</div>
+
+<div class="grid">
+<section class="panel">
+<h2>Attendance</h2>
+<table><tr><th>Subject</th><th>Classes</th><th>Attended</th><th>%</th></tr>
+{% for r in attendance %}
+<tr><td>{{ r.name }}</td><td>{{ r.total_classes }}</td><td>{{ r.attended_classes }}</td>
+<td>{{ ((r.attended_classes*100/r.total_classes)|round(1)) if r.total_classes else 0 }}%</td></tr>
+{% else %}<tr><td colspan="4">No attendance records yet.</td></tr>{% endfor %}
+</table>
+</section>
+
+<section class="panel">
+<h2>Upcoming Assignments</h2>
+<table><tr><th>Title</th><th>Subject</th><th>Due</th><th>Status</th></tr>
+{% for a in assignments %}
+<tr><td>{{ a.title }}</td><td>{{ a.subject }}</td><td>{{ a.due_date }}</td><td>{{ a.status }}</td></tr>
+{% else %}<tr><td colspan="4">No assignments yet.</td></tr>{% endfor %}
+</table>
+</section>
+</div>
+{% endblock %}

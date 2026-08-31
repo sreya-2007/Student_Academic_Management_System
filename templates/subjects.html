@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Subjects{% endblock %}
+{% block content %}
+<h1>Subjects</h1>
+<div class="grid">
+<section class="panel">
+<h2>Add Subject</h2>
+<form method="post">
+<input name="name" placeholder="Subject name" required>
+<input name="code" placeholder="Course code">
+<input name="teacher" placeholder="Teacher">
+<button>Add Subject</button>
+</form>
+</section>
+<section class="panel">
+<h2>Subject List</h2>
+<table><tr><th>Name</th><th>Code</th><th>Teacher</th><th></th></tr>
+{% for s in subjects %}
+<tr><td>{{ s.name }}</td><td>{{ s.code }}</td><td>{{ s.teacher }}</td><td>
+<form method="post" action="{{ url_for('delete_subject', id=s.id) }}"><button class="danger">Delete</button></form>
+</td></tr>
+{% else %}<tr><td colspan="4">Add your first subject.</td></tr>{% endfor %}
+</table>
+</section>
+</div>
+{% endblock %}

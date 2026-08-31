@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Marks{% endblock %}
+{% block content %}
+<h1>Marks Tracker</h1>
+<div class="grid">
+<section class="panel">
+<h2>Add Marks</h2>
+<form method="post">
+<input name="subject" placeholder="Subject" required>
+<input name="exam" placeholder="Exam / CA / Midterm">
+<input type="number" step="0.01" name="marks" placeholder="Marks obtained" required>
+<input type="number" step="0.01" name="total" placeholder="Total marks" required>
+<button>Add Marks</button>
+</form>
+</section>
+<section class="panel">
+<h2>Marks Records</h2>
+<table><tr><th>Subject</th><th>Exam</th><th>Marks</th><th>Percentage</th><th></th></tr>
+{% for m in marks %}
+<tr><td>{{ m.subject }}</td><td>{{ m.exam }}</td><td>{{ m.marks }}/{{ m.total }}</td>
+<td>{{ ((m.marks*100/m.total)|round(1)) if m.total else 0 }}%</td><td>
+<form method="post" action="{{ url_for('delete_mark', id=m.id) }}"><button class="danger">Delete</button></form>
+</td></tr>
+{% else %}<tr><td colspan="5">No marks records yet.</td></tr>{% endfor %}
+</table>
+</section>
+</div>
+{% endblock %}

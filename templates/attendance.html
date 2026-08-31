@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Attendance{% endblock %}
+{% block content %}
+<h1>Attendance Tracker</h1>
+<div class="grid">
+<section class="panel">
+<h2>Update Attendance</h2>
+<form method="post">
+<select name="subject_id" required>
+<option value="">Select subject</option>
+{% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+</select>
+<input type="number" name="total_classes" min="0" placeholder="Total classes" required>
+<input type="number" name="attended_classes" min="0" placeholder="Attended classes" required>
+<button>Save Attendance</button>
+</form>
+</section>
+<section class="panel">
+<h2>Records</h2>
+<table><tr><th>Subject</th><th>Total</th><th>Attended</th><th>Percentage</th></tr>
+{% for a in attendance %}
+<tr><td>{{ a.name }}</td><td>{{ a.total_classes }}</td><td>{{ a.attended_classes }}</td>
+<td>{{ ((a.attended_classes*100/a.total_classes)|round(1)) if a.total_classes else 0 }}%</td></tr>
+{% else %}<tr><td colspan="4">No records yet.</td></tr>{% endfor %}
+</table>
+</section>
+</div>
+{% endblock %}
